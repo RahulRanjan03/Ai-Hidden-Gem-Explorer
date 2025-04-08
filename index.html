@@ -5,11 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Hidden Gem Explorer</title>
     <link rel="stylesheet" href="/style.css">
+    <style>
+        .header {
+            display: flex;
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center items horizontally */
+            text-align: center; /* Ensure text is centered */
+        }
+        .header .title-section {
+            display: flex;
+            align-items: center; /* Align logo and title horizontally */
+        }
+        .header img {
+            width: 70px; /* Adjust size as needed */
+            height: 70px;
+            margin-right: 10px; /* Space between logo and text */
+            vertical-align: middle; /* Aligns logo vertically with text */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>AI Hidden Gem Explorer</h1>
+            <div class="title-section">
+                <img src="img2.png" alt="Logo" onerror="this.src='https://example.com/default-logo.png';"> <!-- Replace with actual logo URL -->
+                <h1>AI Hidden Gem Explorer</h1>
+            </div>
             <p>Powered by Gemini</p>
         </div>
         <div class="chat-area" id="chat-box">
@@ -36,6 +57,21 @@
     </div>
     <canvas id="particle-canvas"></canvas>
     <script src="/script.js"></script>
-    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'92c0c2631f9a6730',t:'MTc0MzkzNjk5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <script>
+        (function(){
+            function c(){
+                var b=a.contentDocument||a.contentWindow.document;
+                if(b){
+                    var d=b.createElement('script');
+                    d.innerHTML="window.__CF$cv$params={r:'92c0c2631f9a6730',t:'MTc0MzkzNjk5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+                    b.getElementsByTagName('head')[0].appendChild(d)}
+            }
+            if(document.body){
+                var a=document.createElement('iframe');
+                a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';
+                document.body.appendChild(a);
+                if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}
+        })();
+    </script>
 </body>
 </html>
