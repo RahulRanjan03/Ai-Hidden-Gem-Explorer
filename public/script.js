@@ -260,6 +260,7 @@ document.getElementById('voice-btn').addEventListener('click', function() {
 });
 
 // Particle Animation with Mouse Interaction
+// Particle Animation with Mouse Interaction and Mode Consistency
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
 
@@ -276,9 +277,20 @@ class Particle {
         this.size = Math.random() * 5 + 2;
         this.speedX = Math.random() * 3 - 1.5;
         this.speedY = Math.random() * 3 - 1.5;
-        this.color = `hsl(${Math.random() * 360}, 70%, 50%)`;
+        this.updateColor(); // Set initial color based on mode
         this.angle = 0;
         this.distance = 0;
+    }
+
+    updateColor() {
+        // Check if dark mode is active (assumes 'dark-mode' class on body or data-theme)
+        const isDarkMode = document.body.classList.contains('dark-mode') || 
+                          document.documentElement.getAttribute('data-theme') === 'dark';
+        
+        // Use contrasting colors: lighter in dark mode, darker in light mode
+        this.color = isDarkMode 
+            ? `hsl(${Math.random() * 360}, 70%, 70%)` // Lighter particles for dark mode
+            : `hsl(${Math.random() * 360}, 70%, 30%)`; // Darker particles for light mode
     }
 
     update(mouse) {
@@ -305,6 +317,7 @@ class Particle {
 }
 
 function init() {
+    particlesArray.length = 0; // Clear existing particles
     for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle());
     }
@@ -312,6 +325,9 @@ function init() {
 
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const isDarkMode = document.body.classList.contains('dark-mode') || 
+                      document.documentElement.getAttribute('data-theme') === 'dark';
+    
     for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update(mouse);
         particlesArray[i].draw();
@@ -321,7 +337,10 @@ function animate() {
             const distance = Math.sqrt(dx * dx + dy * dy);
             if (distance < 150) {
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / 150})`;
+                // Use a neutral gray line that works in both modes, with opacity based on distance
+                ctx.strokeStyle = isDarkMode 
+                    ? `rgba(200, 200, 200, ${1 - distance / 150})` // Light gray for dark mode
+                    : `rgba(100, 100, 100, ${1 - distance / 150})`; // Darker gray for light mode
                 ctx.lineWidth = 1;
                 ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
                 ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
@@ -343,8 +362,21 @@ canvas.addEventListener('mouseleave', () => {
     mouse.y = null;
 });
 
+// Observe theme changes (if dynamically toggled)
+const observer = new MutationObserver(() => {
+    particlesArray.forEach(particle => particle.updateColor()); // Update colors on mode change
+});
+observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
 init();
 animate();
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    init(); // Reinitialize particles to fit new canvas size
+});
 
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
